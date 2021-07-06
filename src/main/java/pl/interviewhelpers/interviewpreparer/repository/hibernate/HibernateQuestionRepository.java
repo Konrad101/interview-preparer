@@ -101,6 +101,20 @@ public class HibernateQuestionRepository implements QuestionRepository {
     }
 
     private boolean validateQuestion(Question question) {
+        if (question == null) {
+            return false;
+        }
+
+        final String content = question.getContent();
+        final String answer = question.getAnswer();
+        if (content == null || answer == null) {
+            return false;
+        } else if (content.length() > 511 || answer.length() > 1023) {
+            return false;
+        } else if (content.replaceAll("\\s", "").length() == 0 ||
+                answer.replaceAll("\\s", "").length() == 0) {
+            return false;
+        }
 
         return true;
     }

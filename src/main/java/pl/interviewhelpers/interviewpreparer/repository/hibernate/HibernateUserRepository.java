@@ -9,10 +9,14 @@ import pl.interviewhelpers.interviewpreparer.repository.UserRepository;
 import pl.interviewhelpers.interviewpreparer.repository.entity.User;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 @Qualifier("hibernateUser")
 public class HibernateUserRepository implements UserRepository {
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     @Override
     public boolean addUser(User newUser) {
@@ -85,19 +89,34 @@ public class HibernateUserRepository implements UserRepository {
                 !validatePhoneNumber(user.getPhoneNumber()) ||
                 !validateEmail(user.getEmail())) {
             return false;
+        } else if (user.getUsername().replaceAll("\\s", "").length() == user.getUsername().length() ||
+                user.getUsername().length() == 0 ||
+                user.getUsername().length() > 63) {
+            return false;
+        } else if (user.getFirstName().replaceAll("\\s", "").length() == 0 ||
+                user.getLastName().replaceAll("\\s", "").length() == 0 ||
+                user.getFirstName().length() > 63 ||
+                user.getLastName().length() > 63) {
+            return false;
         }
-        // check username, email, first name & last name
 
         return true;
     }
 
     private boolean validatePhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.length() > 15)
+            return false;
 
-        return true;
+        Pattern pattern = Pattern.compile("^(\\d{3}[- .]?){2}\\d{4}$");
+        Matcher matcher = pattern.matcher(phoneNumber);
+        return matcher.find();
     }
 
     private boolean validateEmail(String email) {
+        if (email == null || email.length() > 127)
+            return false;
 
-        return true;
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return matcher.find();
     }
 }
