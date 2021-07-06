@@ -44,24 +44,36 @@ public class HibernateUserRepository implements UserRepository {
         }
         User user = getUserByUsername(username);
         user.setPhoneNumber(newNumber);
+        updateUser(user);
 
-        final Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(user);
-        session.getTransaction().commit();
-        session.close();
         return true;
     }
 
     @Override
     public boolean changeEmail(String username, String newEmail) {
+        if (!validateEmail(newEmail)) {
+            return false;
+        }
+        User user = getUserByUsername(username);
+        user.setEmail(newEmail);
+        updateUser(user);
+
         return true;
+    }
+
+    private void updateUser(User user) {
+        final Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(user);
+        session.getTransaction().commit();
+        session.close();
     }
 
     private User getUserByUsername(String username) {
         final Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        final Query<User> query = session.createQuery("from User where username=:uname", User.class);
+        final Query<User> query = session.createQuery("from User where username = :uname", User.class);
+        // to prevent SQL injection
         query.setParameter("uname", username);
         User user = query.uniqueResult();
         session.close();
@@ -69,14 +81,23 @@ public class HibernateUserRepository implements UserRepository {
     }
 
     private boolean validateUser(User user) {
+        if (user == null ||
+                !validatePhoneNumber(user.getPhoneNumber()) ||
+                !validateEmail(user.getEmail())) {
+            return false;
+        }
+        // check username, email, first name & last name
+
         return true;
     }
 
-    private boolean validatePhoneNumber(String email) {
+    private boolean validatePhoneNumber(String phoneNumber) {
+
         return true;
     }
 
     private boolean validateEmail(String email) {
+
         return true;
     }
 }
