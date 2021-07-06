@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### db config ###
+application.properties
+hibernate.cfg.xml
+
 ### STS ###
 .apt_generated
 .classpath
