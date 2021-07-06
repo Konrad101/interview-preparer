@@ -69,7 +69,7 @@ public class HibernateUserRepository implements UserRepository {
         session.close();
     }
 
-    private User getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
         final Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         final Query<User> query = session.createQuery("from User where username = :uname", User.class);

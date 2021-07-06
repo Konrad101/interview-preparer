@@ -2,7 +2,9 @@ package pl.interviewhelpers.interviewpreparer.repository.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import pl.interviewhelpers.interviewpreparer.repository.CategoryRepository;
 import pl.interviewhelpers.interviewpreparer.repository.QuestionRepository;
+import pl.interviewhelpers.interviewpreparer.repository.entity.Category;
 import pl.interviewhelpers.interviewpreparer.repository.entity.Question;
 import pl.interviewhelpers.interviewpreparer.repository.entity.User;
 
@@ -64,21 +66,38 @@ public class HibernateQuestionRepository implements QuestionRepository {
     }
 
     private void executeQuestionOperation(Question question, DatabaseOperation operationName) {
-        if(question == null && operationName == null)
+        if (question == null && operationName == null)
             return;
 
         final Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        switch (operationName){
+        switch (operationName) {
             case SAVE:
+                setQuestionCategory(question);
                 session.save(question);
+                break;
             case UPDATE:
+                setQuestionCategory(question);
                 session.update(question);
+                break;
             case DELETE:
                 session.delete(question);
+                break;
         }
         session.getTransaction().commit();
         session.close();
+    }
+
+    private void setQuestionCategory(Question question) {
+        if (question == null)
+            return;
+
+        final Category category = question.getCategory();
+        CategoryRepository categoryRepository = new HibernateCategoryRepository();
+        final Category categoryFromDatabase = categoryRepository.getCategory(
+                category.getProgrammingLanguage(),
+                category.getCategoryName());
+        question.setCategory(categoryFromDatabase);
     }
 
     private boolean validateQuestion(Question question) {

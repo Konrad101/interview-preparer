@@ -9,9 +9,9 @@ import javax.persistence.*;
 @Data
 public class Category {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "CATEGORY_ID")
-    private long categoryId;
+    private int categoryId;
     @Column(name = "PROGRAMMING_LANGUAGE")
     private String programmingLanguage;
     @Column(name = "CATEGORY_NAME")

@@ -9,9 +9,9 @@ import javax.persistence.*;
 @Data
 public class Question {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "QUESTION_ID")
-    private long questionId;
+    private int questionId;
     @Column(name = "CONTENT")
     private String content;
     @Column(name = "ANSWER")
