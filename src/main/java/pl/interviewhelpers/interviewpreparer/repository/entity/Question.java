@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Table(name = "QUESTIONS", schema = "QUESTIONS")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Question {
     @Id
