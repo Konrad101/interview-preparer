@@ -2,18 +2,15 @@ package pl.interviewhelpers.interviewpreparer.repository.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import pl.interviewhelpers.interviewpreparer.repository.DuplicatedUsernameException;
 import pl.interviewhelpers.interviewpreparer.repository.UserRepository;
 import pl.interviewhelpers.interviewpreparer.repository.entity.User;
 
-import java.util.*;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Component
-@Qualifier("hibernateUser")
 public class HibernateUserRepository implements UserRepository {
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
