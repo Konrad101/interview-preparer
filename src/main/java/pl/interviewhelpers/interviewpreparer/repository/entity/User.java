@@ -1,6 +1,9 @@
 package pl.interviewhelpers.interviewpreparer.repository.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -8,6 +11,9 @@ import javax.persistence.*;
 @Table(name = "USERS", schema = "USERS")
 @SecondaryTable(name = "PERSON", schema = "USERS")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User {
     @Id
     @Column(name = "USERNAME")
