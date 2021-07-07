@@ -70,6 +70,7 @@ public class HibernateUserRepository implements UserRepository {
         session.close();
     }
 
+    @Override
     public User getUserByUsername(String username) {
         final Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
