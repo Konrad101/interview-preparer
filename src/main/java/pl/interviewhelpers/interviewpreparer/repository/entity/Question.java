@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "QUESTIONS", schema = "QUESTIONS")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Question {

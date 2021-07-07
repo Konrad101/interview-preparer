@@ -35,9 +35,9 @@ public class UserPatchRequest {
     }
 
     public UserPatchOperation getPatchOperation() {
-        if (op.equalsIgnoreCase(PHONE_OPERATION)) {
+        if (path.equalsIgnoreCase(PHONE_OPERATION)) {
             return UserPatchOperation.CHANGE_PHONE_NUMBER;
-        } else if (op.equalsIgnoreCase(EMAIL_OPERATION)) {
+        } else if (path.equalsIgnoreCase(EMAIL_OPERATION)) {
             return UserPatchOperation.CHANGE_EMAIL;
         }
 

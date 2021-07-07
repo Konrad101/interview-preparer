@@ -72,6 +72,7 @@ public class HibernateUserRepository implements UserRepository {
 
     @Override
     public User getUserByUsername(String username) {
+        username = username.toLowerCase(Locale.ROOT);
         final Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         final Query<User> query = session.createQuery("from User where username = :uname", User.class);
@@ -87,7 +88,7 @@ public class HibernateUserRepository implements UserRepository {
                 !validatePhoneNumber(user.getPhoneNumber()) ||
                 !validateEmail(user.getEmail())) {
             return false;
-        } else if (user.getUsername().replaceAll("\\s", "").length() == user.getUsername().length() ||
+        } else if (user.getUsername().replaceAll("\\s", "").length() < user.getUsername().length() ||
                 user.getUsername().length() == 0 ||
                 user.getUsername().length() > 63) {
             return false;
@@ -102,10 +103,16 @@ public class HibernateUserRepository implements UserRepository {
     }
 
     private boolean validatePhoneNumber(String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.length() > 15)
+        if (phoneNumber == null)
+            return true;
+        else if (phoneNumber.length() > 15)
             return false;
-
-        Pattern pattern = Pattern.compile("^(\\d{3}[- .]?){2}\\d{4}$");
+        String differentPatterns
+                = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
+                + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
+                + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$"
+                + "|^(\\d{3}[- .]?){2}\\d{3}$";
+        Pattern pattern = Pattern.compile(differentPatterns);
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.find();
     }

@@ -36,6 +36,8 @@ public class UserService {
 
     public UserResponse getUserByUsername(String username) {
         final User userByUsername = userRepository.getUserByUsername(username);
-        return userMapper.map(userByUsername);
+        return userByUsername != null ?
+                userMapper.map(userByUsername) :
+                null;
     }
 }

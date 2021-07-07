@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/interview-api/user")
-    public ResponseEntity createUser(UserRequest request) {
+    public ResponseEntity createUser(@RequestBody UserRequest request) {
         boolean success = userService.createUser(request);
         if (success) {
             return new ResponseEntity(HttpStatus.CREATED);
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PatchMapping(path = "interview-api/user")
-    public ResponseEntity updateUser(UserPatchRequest patchRequest) {
+    public ResponseEntity updateUser(@RequestBody UserPatchRequest patchRequest) {
         if (patchRequest.isOperationAvailable() && patchRequest.isPathValid()) {
             boolean success = false;
             if (patchRequest.getPatchOperation() == UserPatchOperation.CHANGE_PHONE_NUMBER) {
