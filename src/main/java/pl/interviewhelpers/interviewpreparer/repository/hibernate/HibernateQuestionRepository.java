@@ -2,10 +2,7 @@ package pl.interviewhelpers.interviewpreparer.repository.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import pl.interviewhelpers.interviewpreparer.controller.dto.QuestionRequest;
-import pl.interviewhelpers.interviewpreparer.repository.CategoryRepository;
 import pl.interviewhelpers.interviewpreparer.repository.QuestionRepository;
-import pl.interviewhelpers.interviewpreparer.repository.entity.Category;
 import pl.interviewhelpers.interviewpreparer.repository.entity.Question;
 
 import java.util.List;

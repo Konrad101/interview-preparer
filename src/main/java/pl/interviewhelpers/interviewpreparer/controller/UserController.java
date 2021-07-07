@@ -8,7 +8,6 @@ import pl.interviewhelpers.interviewpreparer.controller.dto.user.UserPatchOperat
 import pl.interviewhelpers.interviewpreparer.controller.dto.user.UserPatchRequest;
 import pl.interviewhelpers.interviewpreparer.controller.dto.user.UserRequest;
 import pl.interviewhelpers.interviewpreparer.controller.dto.user.UserResponse;
-import pl.interviewhelpers.interviewpreparer.repository.entity.User;
 import pl.interviewhelpers.interviewpreparer.service.UserService;
 
 @RestController
