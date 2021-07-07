@@ -13,20 +13,20 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class QuestionController {
-    private final QuestionService helperService;
+    private final QuestionService questionService;
 
     @GetMapping(path = "/interview-api/question")
     public ResponseEntity<List<QuestionResponse>> getQuestions(@RequestParam(required = false) String username) {
         if (username == null) {
-            return new ResponseEntity<>(helperService.getAllQuestionsResponses(), HttpStatus.OK);
+            return new ResponseEntity<>(questionService.getAllQuestionsResponses(), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(helperService.getUserQuestionsResponses(username), HttpStatus.OK);
+        return new ResponseEntity<>(questionService.getUserQuestionsResponses(username), HttpStatus.OK);
     }
 
     @PostMapping(path = "/interview-api/question")
     public ResponseEntity createQuestion(@RequestBody QuestionRequest request) {
-        boolean success = helperService.createQuestion(request);
+        boolean success = questionService.createQuestion(request);
         if (success) {
             return new ResponseEntity(HttpStatus.CREATED);
         }
@@ -35,10 +35,10 @@ public class QuestionController {
     }
 
     @PutMapping(path = "/interview-api/question")
-    public ResponseEntity<QuestionResponse> updateQuestion(
+    public ResponseEntity updateQuestion(
             @RequestBody QuestionRequest request,
             @RequestParam int id) {
-        boolean success = helperService.updateQuestion(id, request);
+        boolean success = questionService.updateQuestion(id, request);
         if (success) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
@@ -50,7 +50,7 @@ public class QuestionController {
     public ResponseEntity<QuestionResponse> deleteQuestion(
             @RequestParam int id
     ) {
-        boolean success = helperService.deleteQuestion(id);
+        boolean success = questionService.deleteQuestion(id);
         if (success) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
