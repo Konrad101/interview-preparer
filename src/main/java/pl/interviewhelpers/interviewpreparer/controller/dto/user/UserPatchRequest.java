@@ -13,7 +13,6 @@ public class UserPatchRequest {
     private final static String AVAILABLE_OPERATION_NAME = "replace";
     private final static String PHONE_OPERATION = "/phoneNumber";
     private final static String EMAIL_OPERATION = "/email";
-    private String username;
     private String op;
     private String path;
     private String value;

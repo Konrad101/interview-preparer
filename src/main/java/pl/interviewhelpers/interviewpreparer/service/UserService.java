@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.interviewhelpers.interviewpreparer.controller.dto.user.UserRequest;
 import pl.interviewhelpers.interviewpreparer.controller.dto.user.UserResponse;
+import pl.interviewhelpers.interviewpreparer.repository.DuplicatedUsernameException;
 import pl.interviewhelpers.interviewpreparer.repository.UserRepository;
 import pl.interviewhelpers.interviewpreparer.repository.entity.User;
 import pl.interviewhelpers.interviewpreparer.repository.hibernate.annotation.HibernateUserRepository;
@@ -23,7 +24,11 @@ public class UserService {
 
     public boolean createUser(UserRequest request) {
         final User user = userMapper.map(request);
-        return userRepository.addUser(user);
+        try {
+            return userRepository.addUser(user);
+        } catch (DuplicatedUsernameException ex) {
+            return false;
+        }
     }
 
     public boolean updatePhoneNumber(String username, String phoneNumber) {

@@ -35,16 +35,18 @@ public class UserController {
     }
 
     @PatchMapping(path = "interview-api/user")
-    public ResponseEntity updateUser(@RequestBody UserPatchRequest patchRequest) {
+    public ResponseEntity updateUser(
+            @RequestParam String username,
+            @RequestBody UserPatchRequest patchRequest) {
         if (patchRequest.isOperationAvailable() && patchRequest.isPathValid()) {
             boolean success = false;
             if (patchRequest.getPatchOperation() == UserPatchOperation.CHANGE_PHONE_NUMBER) {
                 success = userService.updatePhoneNumber(
-                        patchRequest.getUsername(),
+                        username,
                         patchRequest.getValue());
             } else if (patchRequest.getPatchOperation() == UserPatchOperation.CHANGE_EMAIL) {
                 success = userService.updateEmail(
-                        patchRequest.getUsername(),
+                        username,
                         patchRequest.getValue());
             }
             return new ResponseEntity(success ?
