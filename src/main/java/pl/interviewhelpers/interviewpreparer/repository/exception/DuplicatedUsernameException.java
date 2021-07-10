@@ -1,4 +1,4 @@
-package pl.interviewhelpers.interviewpreparer.repository;
+package pl.interviewhelpers.interviewpreparer.repository.exception;
 
 public class DuplicatedUsernameException extends RuntimeException {
     public DuplicatedUsernameException() {

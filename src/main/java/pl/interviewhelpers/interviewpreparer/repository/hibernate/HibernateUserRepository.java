@@ -2,7 +2,7 @@ package pl.interviewhelpers.interviewpreparer.repository.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import pl.interviewhelpers.interviewpreparer.repository.DuplicatedUsernameException;
+import pl.interviewhelpers.interviewpreparer.repository.exception.DuplicatedUsernameException;
 import pl.interviewhelpers.interviewpreparer.repository.UserRepository;
 import pl.interviewhelpers.interviewpreparer.repository.entity.User;
 

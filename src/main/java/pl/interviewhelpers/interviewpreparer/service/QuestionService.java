@@ -49,6 +49,10 @@ public class QuestionService {
     }
 
     private List<QuestionResponse> mapQuestionsToResponses(List<Question> questions) {
+        if (questions == null) {
+            return null;
+        }
+
         return questions
                 .stream()
                 .map(questionMapper::map)

@@ -17,6 +17,10 @@ public class QuestionMapper {
     private final CategoryRepository categoryRepository;
 
     public QuestionResponse map(Question question) {
+        if (question == null) {
+            throw new IllegalArgumentException("Question cannot be null");
+        }
+
         final Category category = question.getCategory();
         String categoryStr = category.getProgrammingLanguage() == null ?
                 category.getCategoryName() :
@@ -32,6 +36,10 @@ public class QuestionMapper {
     }
 
     public Question map(QuestionRequest questionRequest) {
+        if (questionRequest == null) {
+            throw new IllegalArgumentException("Question request cannot be null");
+        }
+
         final String username = questionRequest.getOwnerUsername();
         final User user = userRepository.getUserByUsername(username);
         final Category questionCategory = categoryRepository.getCategory(

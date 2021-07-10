@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.interviewhelpers.interviewpreparer.controller.dto.user.UserRequest;
 import pl.interviewhelpers.interviewpreparer.controller.dto.user.UserResponse;
-import pl.interviewhelpers.interviewpreparer.repository.DuplicatedUsernameException;
+import pl.interviewhelpers.interviewpreparer.repository.exception.DuplicatedUsernameException;
 import pl.interviewhelpers.interviewpreparer.repository.UserRepository;
 import pl.interviewhelpers.interviewpreparer.repository.entity.User;
 import pl.interviewhelpers.interviewpreparer.repository.hibernate.annotation.HibernateUserRepository;

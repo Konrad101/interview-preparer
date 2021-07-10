@@ -3,11 +3,19 @@ package pl.interviewhelpers.interviewpreparer.repository.hibernate;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pl.interviewhelpers.interviewpreparer.repository.QuestionRepository;
+import pl.interviewhelpers.interviewpreparer.repository.UserRepository;
 import pl.interviewhelpers.interviewpreparer.repository.entity.Question;
+import pl.interviewhelpers.interviewpreparer.repository.exception.UserNotFoundException;
 
 import java.util.List;
 
 public class HibernateQuestionRepository implements QuestionRepository {
+    private final UserRepository userRepository;
+
+    public HibernateQuestionRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public List<Question> getAllQuestions() {
         final Session session = HibernateUtil.getSessionFactory().openSession();
@@ -20,8 +28,11 @@ public class HibernateQuestionRepository implements QuestionRepository {
 
     @Override
     public List<Question> getUserQuestions(String username) {
-        if (username == null) {
-            return null;
+        if (username == null || username.length() == 0) {
+            throw new IllegalArgumentException("Username must be longer than 0 characters.");
+        }
+        if (userRepository.getUserByUsername(username) == null) {
+            throw new UserNotFoundException();
         }
 
         final Session session = HibernateUtil.getSessionFactory().openSession();
@@ -46,6 +57,9 @@ public class HibernateQuestionRepository implements QuestionRepository {
 
     @Override
     public boolean editQuestion(int questionId, Question question) {
+        if (questionId < 0) {
+            throw new IllegalArgumentException("Id cannot be negative number.");
+        }
         if (!validateQuestion(question)) {
             return false;
         }
@@ -56,6 +70,9 @@ public class HibernateQuestionRepository implements QuestionRepository {
 
     @Override
     public boolean deleteQuestion(int questionId) {
+        if (questionId < 0) {
+            throw new IllegalArgumentException("Id cannot be negative number.");
+        }
         final Question question = getQuestionById(questionId);
         if (!validateQuestion(question)) {
             return false;

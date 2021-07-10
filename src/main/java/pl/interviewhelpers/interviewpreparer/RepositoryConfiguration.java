@@ -18,7 +18,7 @@ public class RepositoryConfiguration {
     @Bean
     @pl.interviewhelpers.interviewpreparer.repository.hibernate.annotation.HibernateQuestionRepository
     public HibernateQuestionRepository questionRepository(){
-        return new HibernateQuestionRepository();
+        return new HibernateQuestionRepository(userRepository());
     }
 
     @Bean
