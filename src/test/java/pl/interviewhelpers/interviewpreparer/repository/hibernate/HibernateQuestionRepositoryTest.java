@@ -63,8 +63,8 @@ class HibernateQuestionRepositoryTest {
     void addQuestion_nullContent_false() {
         // given
         final Question question = new Question();
-        question.setAnswer("answer");
         question.setContent(null);
+        question.setAnswer("answer");
         User user = User
                 .builder()
                 .username("username")
@@ -109,8 +109,8 @@ class HibernateQuestionRepositoryTest {
     void addQuestion_nullUser_false() {
         // given
         final Question question = new Question();
-        question.setContent("content");
         question.setAnswer("answer");
+        question.setContent("content");
         question.setQuestionOwner(null);
         Category category = new Category();
         category.setCategoryName("category");
@@ -126,6 +126,7 @@ class HibernateQuestionRepositoryTest {
         // given
         final Question question = new Question();
         question.setContent("content");
+        question.setAnswer("answer");
         User user = User
                 .builder()
                 .username("username")
@@ -208,6 +209,7 @@ class HibernateQuestionRepositoryTest {
         // given
         final Question question = new Question();
         question.setContent("content");
+        question.setAnswer("answer");
         User user = User
                 .builder()
                 .username("username")
@@ -229,6 +231,7 @@ class HibernateQuestionRepositoryTest {
         final int questionId = -1;
         final Question question = new Question();
         question.setContent("content");
+        question.setAnswer("answer");
         User user = User
                 .builder()
                 .username("username")
